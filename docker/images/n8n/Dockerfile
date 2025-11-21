@@ -6,7 +6,7 @@ ARG TARGETPLATFORM
 # ==============================================================================
 # STAGE 1: System Dependencies & Base Setup
 # ==============================================================================
-FROM n8nio/base:${NODE_VERSION} AS system-deps
+FROM --platform=linux/amd64 n8nio/base:${NODE_VERSION} AS system-deps
 
 # ==============================================================================
 # STAGE 2: Application Artifact Processor
@@ -57,10 +57,10 @@ COPY docker/images/n8n/docker-entrypoint.sh /
 COPY docker/images/n8n/n8n-task-runners.json /etc/n8n-task-runners.json
 
 RUN cd /usr/local/lib/node_modules/n8n && \
-		npm rebuild sqlite3 && \
-		ln -s /usr/local/lib/node_modules/n8n/bin/n8n /usr/local/bin/n8n && \
-    mkdir -p /home/node/.n8n && \
-    chown -R node:node /home/node
+        npm rebuild sqlite3 && \
+        ln -s /usr/local/lib/node_modules/n8n/bin/n8n /usr/local/bin/n8n && \
+        mkdir -p /home/node/.n8n && \
+        chown -R node:node /home/node
 
 RUN cd /usr/local/lib/node_modules/n8n/node_modules/pdfjs-dist && npm install @napi-rs/canvas
 
@@ -73,3 +73,4 @@ LABEL org.opencontainers.image.title="n8n" \
       org.opencontainers.image.source="https://github.com/n8n-io/n8n" \
       org.opencontainers.image.url="https://n8n.io" \
       org.opencontainers.image.version=${N8N_VERSION}
+			
