@@ -11,14 +11,14 @@ FROM --platform=linux/amd64 n8nio/base:${NODE_VERSION} AS system-deps
 # ==============================================================================
 # STAGE 2: Application Artifact Processor
 # ==============================================================================
-FROM alpine:3.22.0 AS app-artifact-processor
+FROM --platform=linux/amd64 alpine:3.22.0 AS app-artifact-processor
 
 COPY ./compiled /app/
 
 # ==============================================================================
 # STAGE 3: Task Runner Launcher
 # ==============================================================================
-FROM alpine:3.22.0 AS launcher-downloader
+FROM --platform=linux/amd64 alpine:3.22.0 AS launcher-downloader
 ARG TARGETPLATFORM
 ARG LAUNCHER_VERSION
 
@@ -40,7 +40,7 @@ RUN set -e; \
 # ==============================================================================
 # STAGE 4: Final Runtime Image
 # ==============================================================================
-FROM system-deps AS runtime
+FROM --platform=linux/amd64 system-deps AS runtime
 
 ARG N8N_VERSION
 ARG N8N_RELEASE_TYPE=dev
