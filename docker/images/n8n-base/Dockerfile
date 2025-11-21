@@ -4,7 +4,7 @@ ARG NODE_VERSION=22.21.0
 # ==============================================================================
 # STAGE 1: Builder for Base Dependencies
 # ==============================================================================
-FROM node:${NODE_VERSION}-alpine AS builder
+FROM --platform=linux/amd64 node:${NODE_VERSION}-alpine AS builder
 
 # Install fonts
 RUN \
@@ -38,7 +38,7 @@ RUN rm -rf /tmp/* /root/.npm /root/.cache/node /opt/yarn* && \
 # ==============================================================================
 # STAGE 2: Final Base Runtime Image
 # ==============================================================================
-FROM node:${NODE_VERSION}-alpine
+FROM --platform=linux/amd64 node:${NODE_VERSION}-alpine AS builder
 
 COPY --from=builder / /
 
