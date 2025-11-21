@@ -38,7 +38,7 @@ RUN rm -rf /tmp/* /root/.npm /root/.cache/node /opt/yarn* && \
 # ==============================================================================
 # STAGE 2: Final Base Runtime Image
 # ==============================================================================
-FROM --platform=linux/amd64 node:${NODE_VERSION}-alpine AS builder
+FROM --platform=linux/amd64 node:${NODE_VERSION}-alpine AS production
 
 COPY --from=builder / /
 
